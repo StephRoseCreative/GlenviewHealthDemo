@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="60">
+<title>Daily Agenda</title>
+<style>
+body {
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:#ffffff;
+  color:#111;
+}
+.container {
+  padding:60px 80px;
+  height:100vh;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.header {
+  text-align:center;
+}
+.header h1 {
+  font-size:70px;
+  margin:0;
+  font-weight:700;
+}
+.date {
+  font-size:36px;
+  margin-top:10px;
+  color:#555;
+}
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  margin-top:40px;
+}
+.block {
+  background:#f5f5f5;
+  padding:40px;
+  border-radius:12px;
+}
+.block h2 {
+  margin:0 0 20px 0;
+  font-size:32px;
+  font-weight:600;
+  color:#444;
+}
+.block p {
+  font-size:42px;
+  margin:0;
+  font-weight:700;
+}
+.movie {
+  margin-top:40px;
+  background:#111;
+  color:#fff;
+  padding:40px;
+  border-radius:12px;
+  text-align:center;
+}
+.movie h2 {
+  font-size:32px;
+  margin:0 0 20px 0;
+}
+.movie p {
+  font-size:56px;
+  font-weight:700;
+  margin:0;
+}
+.reminders {
+  margin-top:40px;
+  font-size:28px;
+  text-align:center;
+  color:#333;
+}
+.banner {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  background:#c62828;
+  color:#fff;
+  font-size:32px;
+  padding:20px 0;
+  white-space:nowrap;
+  overflow:hidden;
+}
+.banner span {
+  display:inline-block;
+  padding-left:100%;
+  animation:scroll 15s linear infinite;
+}
+@keyframes scroll {
+  0% { transform:translateX(0); }
+  100% { transform:translateX(-100%); }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>Daily Agenda</h1>
+    <div class="date" id="date"></div>
+  </div>
+
+  <div class="grid">
+    <div class="block">
+      <h2>Morning Activity</h2>
+      <p id="morning"></p>
+    </div>
+
+    <div class="block">
+      <h2>Afternoon Activity</h2>
+      <p id="afternoon"></p>
+    </div>
+  </div>
+
+  <div class="movie">
+    <h2>Tonight's Movie</h2>
+    <p id="movie"></p>
+  </div>
+
+  <div class="reminders">
+    <div id="reminder1"></div>
+    <div id="reminder2"></div>
+  </div>
+</div>
+
+<div class="banner">
+  <span id="urgent"></span>
+</div>
+
+<script>
+fetch("https://api.allorigins.win/raw?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vTmmssQXxO9xwUvp5SZTJV8-GXyu81hrngng7Q8hCdjrFTVW8ypHqbw0ShtHGpJr5jt5zHsZwq8whmK/pub?gid=0&single=true&output=csv")
+.then(response => response.text())
+.then(data => {
+  const rows = data.split("\n");
+  const cols = rows[1].split(",");
+
+  document.getElementById("date").innerText = cols[0] || "";
+  document.getElementById("morning").innerText = cols[1] || "";
+  document.getElementById("afternoon").innerText = cols[2] || "";
+  document.getElementById("movie").innerText = cols[3] || "";
+  document.getElementById("reminder1").innerText = cols[4] || "";
+  document.getElementById("reminder2").innerText = cols[5] || "";
+  document.getElementById("urgent").innerText = cols[6] || "";
+});
+</script>
+
+</body>
+</html>
