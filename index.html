@@ -17,7 +17,7 @@ body{
   color:#2a3a94;
 }
 
-/* BACKGROUND BLOBS */
+/* BACKGROUND */
 
 .bg{
   position:fixed;
@@ -83,22 +83,27 @@ body{
   display:block;
 }
 
-/* HEADINGS */
+/* PAGE 1 */
+
+.page1-center{
+  text-align:center;
+  margin-top:200px;
+}
 
 .main-title{
   font-family:'League Spartan';
   font-weight:800;
-  font-size:80px;
+  font-size:110px;
   margin-bottom:20px;
 }
 
 .sub-date{
   font-family:'League Spartan';
   font-weight:600;
-  font-size:40px;
+  font-size:60px;
 }
 
-/* PAGE 2 LAYOUT */
+/* PAGE 2 */
 
 .page2-layout{
   display:grid;
@@ -138,7 +143,7 @@ body{
   height:250px;
 }
 
-/* WEEK PAGE */
+/* WEEK PAGE (UNCHANGED) */
 
 .week-grid{
   display:grid;
@@ -218,8 +223,10 @@ body{
 
 <!-- PAGE 1 -->
 <div class="page active" id="page1">
-  <h1 class="main-title">Daily Agenda</h1>
-  <div class="sub-date" id="dateSmall"></div>
+  <div class="page1-center">
+    <div class="main-title">Daily Agenda</div>
+    <div class="sub-date" id="dateSmall"></div>
+  </div>
 </div>
 
 <!-- PAGE 2 -->
@@ -229,21 +236,7 @@ body{
 
   <div class="page2-layout">
 
-    <!-- LEFT -->
-    <div>
-      <div class="card">
-        <div class="section-label">Reminders</div>
-        <div class="reminder-text">
-          <div id="reminder1"></div>
-          <br>
-          <div id="reminder2"></div>
-        </div>
-      </div>
-
-      <div class="photo-placeholder"></div>
-    </div>
-
-    <!-- RIGHT -->
+    <!-- LEFT (Now Activities) -->
     <div>
       <div class="card">
         <div class="section-label">Morning</div>
@@ -259,6 +252,20 @@ body{
         <div class="section-label">Movie</div>
         <div class="activity-text" id="movie"></div>
       </div>
+    </div>
+
+    <!-- RIGHT (Now Reminders + Photo) -->
+    <div>
+      <div class="card">
+        <div class="section-label">Reminders</div>
+        <div class="reminder-text">
+          <div id="reminder1"></div>
+          <br>
+          <div id="reminder2"></div>
+        </div>
+      </div>
+
+      <div class="photo-placeholder"></div>
     </div>
 
   </div>
@@ -304,7 +311,6 @@ document.getElementById("reminder2").innerText = "• " + clean(row["Reminder 2"
 const urgentText = clean(row["Urgent Banner"]);
 document.getElementById("urgent").innerText = urgentText ? "⚠ " + urgentText : "";
 
-/* WEEK GRID */
 const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const grid = document.getElementById("weekGrid");
 
