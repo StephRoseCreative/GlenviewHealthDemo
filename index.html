@@ -2,203 +2,182 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Daily Agenda</title>
+<meta http-equiv="refresh" content="900">
+<title>Glenview Health Display</title>
 
-<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
   margin:0;
-  overflow:hidden;
-  font-family:'Poppins',sans-serif;
   background:#c9dfe4;
-}
-
-/* ===== Layer System ===== */
-
-.layer{
-  position:absolute;
-  width:100%;
-  height:100%;
-}
-
-.content{
-  position:absolute;
-  inset:0;
-  padding:100px 140px;
-  box-sizing:border-box;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-
-/* ===== Blobs ===== */
-
-.blob{
-  position:absolute;
-  border-radius:50%;
-  filter:blur(0px);
-}
-
-.blob1{
-  width:700px;
-  height:700px;
-  background:#deeaed;
-  top:-250px;
-  left:-250px;
-}
-
-.blob2{
-  width:600px;
-  height:600px;
-  background:#b2b8d3;
-  bottom:-250px;
-  right:-200px;
-}
-
-.blob3{
-  width:500px;
-  height:500px;
-  background:#e9f2f3;
-  top:200px;
-  right:-200px;
-  border-radius:45% 55% 60% 40% / 60% 40% 60% 40%;
-}
-
-.blob4{
-  width:450px;
-  height:450px;
-  background:#79aab4;
-  bottom:-180px;
-  left:200px;
-  border-radius:60% 40% 55% 45% / 50% 50% 60% 40%;
-}
-
-/* Sparkles */
-
-.sparkle{
-  position:absolute;
-  width:120px;
-  height:120px;
-  background:#07ac61;
-  clip-path:polygon(50% 0%, 60% 35%, 100% 50%, 60% 65%, 50% 100%, 40% 65%, 0% 50%, 40% 35%);
-}
-
-.sparkle1{ top:200px; right:300px; }
-.sparkle2{ bottom:300px; right:200px; background:#2fa76f; }
-
-/* ===== Pages ===== */
-
-.page{ display:none; }
-.page.active{ display:block; }
-
-/* ===== Cover ===== */
-
-.cover-title{
-  font-family:'League Spartan';
-  font-size:88px;
+  font-family:'Poppins',sans-serif;
+  overflow:hidden;
   color:#2a3a94;
 }
 
-.cover-date{
-  font-size:42px;
-  color:#4b757d;
-  margin-top:20px;
+/* ===== BLOBS ===== */
+
+.bg{
+  position:fixed;
+  width:100%;
+  height:100%;
+  z-index:-1;
 }
+
+.blob1{
+  position:absolute;
+  width:1100px;
+  height:1100px;
+  background:#deeaed;
+  border-radius:50%;
+  top:-450px;
+  left:-300px;
+}
+
+.blob2{
+  position:absolute;
+  width:900px;
+  height:900px;
+  background:#b2b8d3;
+  border-radius:50%;
+  bottom:-350px;
+  right:-250px;
+}
+
+.blob3{
+  position:absolute;
+  width:650px;
+  height:650px;
+  background:#79aab4;
+  border-radius:50%;
+  bottom:-250px;
+  left:400px;
+  opacity:.35;
+}
+
+/* ===== LOGO ===== */
 
 .logo{
   position:absolute;
   top:60px;
   right:100px;
-  width:180px;
+  width:240px;
 }
 
-/* ===== Today ===== */
+/* ===== CONTAINER ===== */
 
-.section-heading{
+.container{
+  padding:120px 140px;
+  height:100vh;
+  box-sizing:border-box;
+  position:relative;
+}
+
+.page{
+  position:absolute;
+  width:calc(100% - 280px);
+  opacity:0;
+  transition:opacity 1s ease;
+}
+
+.page.active{
+  opacity:1;
+}
+
+/* ===== HEADINGS ===== */
+
+.main-title{
   font-family:'League Spartan';
-  font-size:64px;
+  font-weight:800;
+  font-size:80px;
+  margin:0 0 60px 0;
   color:#2a3a94;
-  margin-bottom:60px;
+}
+
+/* ===== DAILY PAGE ===== */
+
+.daily-layout{
+  display:grid;
+  grid-template-columns:1.3fr 0.7fr;
+  gap:60px;
+}
+
+.section-label{
+  font-family:'League Spartan';
+  font-weight:600;
+  font-size:20px;
+  margin-bottom:8px;
+  color:#4b757d;
 }
 
 .card{
   background:#fffdf5;
-  padding:30px;
-  border-radius:20px;
-  margin-bottom:30px;
-  width:65%;
-  box-shadow:0 15px 40px rgba(0,0,0,0.05);
+  border-radius:24px;
+  padding:35px 45px;
+  margin-bottom:40px;
 }
 
-.time{
-  font-weight:600;
-  color:#4b757d;
-  margin-bottom:10px;
-  font-size:14px;
+.activity-text{
+  font-family:'League Spartan';
+  font-weight:700;
+  font-size:34px;
+  margin-top:5px;
 }
 
-.activity{
+.reminder-card{
+  background:#fffdf5;
+  border-radius:28px;
+  padding:45px;
   font-size:22px;
-  color:#2a3a94;
+  line-height:1.8;
 }
 
-.reminder-panel{
-  position:absolute;
-  right:140px;
-  top:260px;
-  width:400px;
-  background:#fffdf5;
-  border-radius:30px;
-  padding:40px;
-  box-shadow:0 20px 50px rgba(0,0,0,0.08);
+/* ===== WEEK PAGE ===== */
+
+.week-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:25px;
 }
 
-.reminder-panel h3{
-  font-family:'League Spartan';
-  color:#2a3a94;
-  margin-bottom:20px;
-}
-
-/* ===== Weekly ===== */
-
-.week-title{
-  font-family:'League Spartan';
-  font-size:72px;
-  color:#2a3a94;
-  margin-bottom:60px;
-}
-
-.week-row{
+.week-day{
   display:flex;
-  gap:20px;
+  flex-direction:column;
 }
 
-.week-card{
-  flex:1;
-  background:#fffdf5;
-  border-radius:20px;
-  padding:20px;
-  min-height:200px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.05);
-}
-
-.week-card h4{
+.week-header{
+  background:#2a3a94;
+  color:#fff;
+  padding:16px;
+  border-radius:18px 18px 0 0;
+  text-align:center;
   font-family:'League Spartan';
-  margin-bottom:10px;
-  color:#4b757d;
+  font-weight:700;
 }
 
-/* ===== Banner ===== */
+.week-box{
+  background:#fffdf5;
+  padding:16px;
+  border-bottom:1px solid #eee;
+  font-size:16px;
+}
+
+.week-box:last-child{
+  border-radius:0 0 18px 18px;
+}
+
+/* ===== URGENT ===== */
 
 .banner{
-  position:fixed;
+  position:absolute;
   bottom:0;
   width:100%;
   background:#07ac61;
   color:#fff;
-  font-size:22px;
+  font-weight:600;
+  font-size:24px;
   padding:14px 0;
   overflow:hidden;
 }
@@ -206,13 +185,12 @@ body{
 .banner span{
   display:inline-block;
   padding-left:100%;
-  animation:scroll 18s linear infinite;
-  white-space:nowrap;
+  animation:scroll 25s linear infinite;
 }
 
 @keyframes scroll{
-  0%{ transform:translateX(0); }
-  100%{ transform:translateX(-100%); }
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-100%)}
 }
 
 </style>
@@ -220,86 +198,114 @@ body{
 
 <body>
 
-<!-- Background Layer -->
-<div class="layer">
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
-  <div class="blob blob4"></div>
-  <div class="sparkle sparkle1"></div>
-  <div class="sparkle sparkle2"></div>
+<div class="bg">
+  <div class="blob1"></div>
+  <div class="blob2"></div>
+  <div class="blob3"></div>
 </div>
 
-<img src="YOUR_LOGO_URL_HERE" class="logo">
+<img class="logo" src="https://i.imgur.com/8Qf6PzY.png">
 
-<div class="content">
+<div class="container">
 
-<!-- PAGE 1 COVER -->
-<div class="page active" id="page1">
-  <div class="cover-title">Daily Agenda</div>
-  <div class="cover-date" id="date"></div>
-</div>
+<!-- DAILY PAGE -->
+<div class="page active" id="dailyPage">
 
-<!-- PAGE 2 TODAY -->
-<div class="page" id="page2">
-  <div class="section-heading">Today's Activities</div>
+<h1 class="main-title" id="date"></h1>
 
+<div class="daily-layout">
+
+<div>
   <div class="card">
-    <div class="time">Morning</div>
-    <div class="activity">Activity Placeholder</div>
+    <div class="section-label">Morning</div>
+    <div class="activity-text" id="morning"></div>
   </div>
 
   <div class="card">
-    <div class="time">Afternoon</div>
-    <div class="activity">Activity Placeholder</div>
+    <div class="section-label">Afternoon</div>
+    <div class="activity-text" id="afternoon"></div>
   </div>
 
   <div class="card">
-    <div class="time">Movie</div>
-    <div class="activity">Movie Placeholder</div>
-  </div>
-
-  <div class="reminder-panel">
-    <h3>Reminders</h3>
-    • Reminder one<br><br>
-    • Reminder two
+    <div class="section-label">Movie</div>
+    <div class="activity-text" id="movie"></div>
   </div>
 </div>
 
-<!-- PAGE 3 WEEKLY -->
-<div class="page" id="page3">
-  <div class="week-title">A Look at the Week</div>
+<div class="reminder-card">
+  <div class="section-label">Reminders</div>
+  <div id="reminder1"></div><br>
+  <div id="reminder2"></div>
+</div>
 
-  <div class="week-row">
-    <div class="week-card"><h4>Mon</h4>Morning<br>Afternoon<br>Movie</div>
-    <div class="week-card"><h4>Tue</h4>Morning<br>Afternoon<br>Movie</div>
-    <div class="week-card"><h4>Wed</h4>Morning<br>Afternoon<br>Movie</div>
-    <div class="week-card"><h4>Thu</h4>Morning<br>Afternoon<br>Movie</div>
-    <div class="week-card"><h4>Fri</h4>Morning<br>Afternoon<br>Movie</div>
-    <div class="week-card"><h4>Sat</h4>Morning<br>Afternoon<br>Movie</div>
-    <div class="week-card"><h4>Sun</h4>Morning<br>Afternoon<br>Movie</div>
-  </div>
+</div>
+</div>
+
+<!-- WEEK PAGE -->
+<div class="page" id="weekPage">
+
+<h1 class="main-title">A Look at the Week</h1>
+
+<div class="week-grid" id="weekGrid"></div>
+
 </div>
 
 </div>
 
 <div class="banner">
-  <span>Urgent message scrolls across all pages continuously.</span>
+  <span id="urgent"></span>
 </div>
 
 <script>
 
-// Live Date
-document.getElementById("date").innerText =
-  new Date().toLocaleDateString('en-AU', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+fetch("https://opensheet.elk.sh/19qGfblEVLezYvpctCS90aoj_5DOy9rrAbgcPBwVpHr0/Sheet1")
+.then(res => res.json())
+.then(data => {
 
-// Page Rotation
-let current = 1;
+if(!data.length) return;
+
+function clean(v){
+  return (v || "").replace(/"/g,"");
+}
+
+const row = data[0];
+
+document.getElementById("date").innerText = clean(row.Date);
+document.getElementById("morning").innerText = clean(row["Morning Activity"]);
+document.getElementById("afternoon").innerText = clean(row["Afternoon Activity"]);
+document.getElementById("movie").innerText = clean(row.Movie);
+document.getElementById("reminder1").innerText = "• " + clean(row["Reminder 1"]);
+document.getElementById("reminder2").innerText = "• " + clean(row["Reminder 2"]);
+document.getElementById("urgent").innerText = clean(row["Urgent Banner"]);
+
+/* WEEK GRID */
+
+const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const grid = document.getElementById("weekGrid");
+grid.innerHTML = "";
+
+days.forEach(day=>{
+  grid.innerHTML += `
+    <div class="week-day">
+      <div class="week-header">${day}</div>
+      <div class="week-box">${clean(row["Morning Activity"])}</div>
+      <div class="week-box">${clean(row["Afternoon Activity"])}</div>
+      <div class="week-box">${clean(row.Movie)}</div>
+    </div>
+  `;
+});
+
+});
+
+/* PAGE ROTATION */
+
+let showWeek = false;
+
 setInterval(()=>{
-  document.getElementById("page"+current).classList.remove("active");
-  current = current === 3 ? 1 : current+1;
-  document.getElementById("page"+current).classList.add("active");
-},12000);
+  showWeek = !showWeek;
+  document.getElementById("dailyPage").classList.toggle("active");
+  document.getElementById("weekPage").classList.toggle("active");
+}, 30000);
 
 </script>
 
