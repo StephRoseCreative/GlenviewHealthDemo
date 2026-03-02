@@ -2,203 +2,219 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="300">
 <title>Daily Agenda</title>
 
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body {
+body{
   margin:0;
   background:#c9dfe4;
-  font-family:'Poppins', sans-serif;
-  color:#1c628d;
+  font-family:'Poppins',sans-serif;
   overflow:hidden;
 }
 
-/* Decorative background SVG layer */
-.bg-shapes {
+/* Decorative background */
+.bg-shapes{
   position:fixed;
-  top:0;
-  left:0;
   width:100%;
   height:100%;
+  top:0;
+  left:0;
   z-index:-1;
 }
 
-.container {
-  padding:80px 100px;
+.logo{
+  position:absolute;
+  top:60px;
+  right:80px;
+  width:180px;
+}
+
+/* Layout */
+.container{
+  padding:100px 140px;
   height:100vh;
   box-sizing:border-box;
   display:flex;
   flex-direction:column;
+  justify-content:center;
 }
 
-.header {
+.page{ display:none; }
+.page.active{ display:block; }
+
+/* COVER PAGE */
+.cover-title{
+  font-family:'League Spartan';
+  font-size:80px;
+  color:#2a3a94;
+  text-align:center;
+}
+
+.cover-date{
+  font-size:42px;
+  color:#4b757d;
+  text-align:center;
+  margin-top:15px;
+}
+
+/* TODAY PAGE */
+.section-title{
+  font-family:'League Spartan';
+  font-size:48px;
+  color:#2a3a94;
   text-align:center;
   margin-bottom:50px;
 }
 
-.header h1 {
-  font-family:'League Spartan', sans-serif;
-  font-size:64px;
-  margin:0;
-  color:#2a3a94;
-}
-
-.layout {
+.today-layout{
   display:grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns:1.2fr 0.8fr;
   gap:60px;
 }
 
-.section-header {
-  background:#4b757d;
-  color:#fff;
-  padding:18px;
-  border-radius:14px;
-  font-family:'League Spartan', sans-serif;
-  font-size:28px;
-  text-align:center;
+.activity-block{
   margin-bottom:20px;
-}
-
-.activity-row {
   display:grid;
-  grid-template-columns:100px 1fr;
-  margin-bottom:15px;
-}
-
-.time {
-  background:#4b757d;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:12px;
-  font-weight:600;
-}
-
-.activity {
-  background:#fffdf5;
-  padding:15px 20px;
-  border-radius:12px;
-  margin-left:10px;
-  font-weight:500;
-  color:#2a3a94;
-}
-
-.reminder-box {
-  background:#fffdf5;
-  padding:25px;
-  border-radius:14px;
-  min-height:220px;
-  color:#2a3a94;
-  font-size:20px;
-}
-
-.weekly {
-  display:none;
-}
-
-.week-grid {
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
+  grid-template-columns:120px 1fr;
   gap:15px;
 }
 
-.week-day {
+.time-label{
+  background:#4b757d;
+  color:#fff;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+}
+
+.activity-text{
   background:#fffdf5;
   border-radius:12px;
-  padding:15px;
-  text-align:center;
-  font-size:16px;
+  padding:18px;
   color:#2a3a94;
 }
 
-.banner {
-  position:absolute;
+.reminder-box{
+  background:#fffdf5;
+  border-radius:14px;
+  padding:30px;
+  min-height:250px;
+  color:#2a3a94;
+  font-size:18px;
+}
+
+/* WEEKLY TABLE */
+.week-title{
+  font-family:'League Spartan';
+  font-size:60px;
+  text-align:center;
+  color:#2a3a94;
+  margin-bottom:50px;
+}
+
+.week-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:15px;
+}
+
+.week-table th{
+  font-family:'League Spartan';
+  font-size:22px;
+  color:#4b757d;
+}
+
+.week-table td{
+  background:#fffdf5;
+  border-radius:14px;
+  padding:20px;
+  vertical-align:top;
+  height:180px;
+  color:#2a3a94;
+  font-size:14px;
+}
+
+/* URGENT BANNER */
+.banner{
+  position:fixed;
   bottom:0;
   width:100%;
   background:#07ac61;
   color:#fff;
-  font-size:24px;
-  padding:12px 0;
+  font-size:22px;
+  padding:14px 0;
   overflow:hidden;
+  z-index:10;
 }
 
-.banner span {
+.banner span{
   display:inline-block;
   padding-left:100%;
-  animation:scroll 20s linear infinite;
+  animation:scroll 18s linear infinite;
+  white-space:nowrap;
 }
 
-@keyframes scroll {
-  0% { transform:translateX(0); }
-  100% { transform:translateX(-100%); }
+@keyframes scroll{
+  0%{ transform:translateX(0); }
+  100%{ transform:translateX(-100%); }
 }
-
-.page { display:none; }
-.page.active { display:block; }
 
 </style>
 </head>
 
 <body>
 
-<!-- Decorative SVG Background -->
+<!-- Decorative Background -->
 <svg class="bg-shapes">
-
-  <!-- Top Left Soft Blob -->
   <circle cx="-200" cy="150" r="350" fill="#deeaed"></circle>
-
-  <!-- Bottom Right Soft Curve -->
   <ellipse cx="100%" cy="100%" rx="400" ry="300" fill="#b2b8d3"></ellipse>
-
-  <!-- Large Green Sparkle -->
   <polygon points="1600,350 1640,450 1740,490 1640,530 1600,630 1560,530 1460,490 1560,450"
            fill="#07ac61" opacity="0.9"/>
-
-  <!-- Smaller Sparkle -->
-  <polygon points="1500,750 1525,810 1585,835 1525,860 1500,920 1475,860 1415,835 1475,810"
-           fill="#2fa76f" opacity="0.8"/>
-
 </svg>
+
+<img src="YOUR_LOGO_URL_HERE" class="logo">
 
 <div class="container">
 
-<div class="page active" id="dailyPage">
+<!-- PAGE 1: COVER -->
+<div class="page active" id="page1">
+  <div class="cover-title">Daily Agenda</div>
+  <div class="cover-date" id="liveDate"></div>
+</div>
 
-  <div class="header">
-    <h1 id="date"></h1>
-  </div>
+<!-- PAGE 2: TODAY -->
+<div class="page" id="page2">
 
-  <div class="layout">
+  <div class="section-title">Today's Activities</div>
+
+  <div class="today-layout">
 
     <div>
-      <div class="section-header">Today's Activities</div>
-
-      <div class="activity-row">
-        <div class="time">9:00</div>
-        <div class="activity" id="morning"></div>
+      <div class="activity-block">
+        <div class="time-label">Morning</div>
+        <div class="activity-text">Activity placeholder</div>
       </div>
 
-      <div class="activity-row">
-        <div class="time">3:00</div>
-        <div class="activity" id="afternoon"></div>
+      <div class="activity-block">
+        <div class="time-label">Afternoon</div>
+        <div class="activity-text">Activity placeholder</div>
       </div>
 
-      <div class="activity-row">
-        <div class="time">7:00</div>
-        <div class="activity" id="movieRow"></div>
+      <div class="activity-block">
+        <div class="time-label">Movie</div>
+        <div class="activity-text">Movie placeholder</div>
       </div>
     </div>
 
     <div>
-      <div class="section-header">Reminders</div>
+      <div class="section-title" style="font-size:32px;">Reminders</div>
       <div class="reminder-box">
-        • <span id="reminder1"></span><br><br>
-        • <span id="reminder2"></span>
+        • Reminder one<br><br>
+        • Reminder two
       </div>
     </div>
 
@@ -206,52 +222,50 @@ body {
 
 </div>
 
-<div class="page weekly" id="weeklyPage">
+<!-- PAGE 3: WEEKLY -->
+<div class="page" id="page3">
 
-  <div class="header">
-    <h1>A Look at the Week</h1>
-  </div>
+  <div class="week-title">A Look at the Week</div>
 
-  <div class="week-grid" id="weekGrid"></div>
+  <table class="week-table">
+    <tr>
+      <th>Mon</th><th>Tue</th><th>Wed</th>
+      <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+    </tr>
+    <tr>
+      <td>Morning<br>Afternoon<br>Movie</td>
+      <td>Morning<br>Afternoon<br>Movie</td>
+      <td>Morning<br>Afternoon<br>Movie</td>
+      <td>Morning<br>Afternoon<br>Movie</td>
+      <td>Morning<br>Afternoon<br>Movie</td>
+      <td>Morning<br>Afternoon<br>Movie</td>
+      <td>Morning<br>Afternoon<br>Movie</td>
+    </tr>
+  </table>
 
 </div>
 
 </div>
 
+<!-- URGENT TICKER -->
 <div class="banner">
-  <span id="urgent"></span>
+  <span>Urgent message goes here and will scroll across all pages.</span>
 </div>
 
 <script>
 
-fetch("https://opensheet.elk.sh/19qGfblEVLezYvpctCS90aoj_5DOy9rrAbgcPBwVpHr0/Sheet1")
-.then(res => res.json())
-.then(data => {
+// Live Date
+const options = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+document.getElementById("liveDate").innerText =
+  new Date().toLocaleDateString('en-AU', options);
 
-  if (!data.length) return;
-  const row = data[0];
-
-  function clean(v) {
-    return (v || "").replace(/"/g,"");
-  }
-
-  document.getElementById("date").innerText = clean(row.Date);
-  document.getElementById("morning").innerText = clean(row["Morning Activity"]);
-  document.getElementById("afternoon").innerText = clean(row["Afternoon Activity"]);
-  document.getElementById("movieRow").innerText = clean(row.Movie);
-  document.getElementById("reminder1").innerText = clean(row["Reminder 1"]);
-  document.getElementById("reminder2").innerText = clean(row["Reminder 2"]);
-  document.getElementById("urgent").innerText = clean(row["Urgent Banner"]);
-
-});
-
-// Page rotation (Daily ↔ Weekly)
-let showWeekly = false;
+// Page Rotation (Cover → Today → Weekly)
+let currentPage = 1;
 setInterval(() => {
-  showWeekly = !showWeekly;
-  document.getElementById("dailyPage").classList.toggle("active");
-  document.getElementById("weeklyPage").classList.toggle("active");
-}, 25000);
+  document.getElementById("page"+currentPage).classList.remove("active");
+  currentPage = currentPage === 3 ? 1 : currentPage + 1;
+  document.getElementById("page"+currentPage).classList.add("active");
+}, 12000);
 
 </script>
 
