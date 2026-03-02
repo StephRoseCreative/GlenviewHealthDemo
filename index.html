@@ -17,7 +17,7 @@ body{
   color:#2a3a94;
 }
 
-/* BACKGROUND */
+/* BACKGROUND BLOBS */
 
 .bg{
   position:fixed;
@@ -67,16 +67,22 @@ body{
   height:120px;
 }
 
-/* PAGE SYSTEM */
+/* CONTENT CONTAINER
+   Reduced height to clear banner
+*/
 
 .container{
-  padding:120px 140px 180px 140px; /* extra bottom space for banner */
-  height:100vh;
+  padding:120px 140px 40px 140px;
+  height:calc(100vh - 100px); /* subtract banner height */
   box-sizing:border-box;
+  overflow:hidden;
 }
+
+/* PAGE SYSTEM */
 
 .page{
   display:none;
+  height:100%;
 }
 
 .page.active{
@@ -87,7 +93,7 @@ body{
 
 .page1-center{
   text-align:center;
-  margin-top:200px;
+  margin-top:150px;
 }
 
 .main-title{
@@ -109,7 +115,6 @@ body{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:60px;
-  margin-top:-40px;   
 }
 
 .card{
@@ -237,7 +242,7 @@ body{
 
   <div class="page2-layout">
 
-    <!-- LEFT (Now Activities) -->
+    <!-- LEFT -->
     <div>
       <div class="card">
         <div class="section-label">Morning</div>
@@ -255,7 +260,7 @@ body{
       </div>
     </div>
 
-    <!-- RIGHT (Now Reminders + Photo) -->
+    <!-- RIGHT -->
     <div>
       <div class="card">
         <div class="section-label">Reminders</div>
