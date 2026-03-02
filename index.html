@@ -17,7 +17,7 @@ body{
   color:#2a3a94;
 }
 
-/* ===== BACKGROUND ===== */
+/* BACKGROUND */
 
 .bg{
   position:fixed;
@@ -57,7 +57,7 @@ body{
   opacity:.35;
 }
 
-/* ===== LOGO PLACEHOLDER ===== */
+/* LOGO PLACEHOLDER */
 
 .logo-placeholder{
   position:absolute;
@@ -67,7 +67,7 @@ body{
   height:120px;
 }
 
-/* ===== CONTAINER ===== */
+/* PAGE SYSTEM */
 
 .container{
   padding:120px 140px;
@@ -87,7 +87,7 @@ body{
   opacity:1;
 }
 
-/* ===== HEADINGS ===== */
+/* HEADINGS */
 
 .main-title{
   font-family:'League Spartan';
@@ -96,45 +96,48 @@ body{
   margin:0 0 60px 0;
 }
 
-/* ===== DAILY PAGE ===== */
+/* CARDS */
 
-.daily-layout{
-  display:grid;
-  grid-template-columns:1.3fr 0.7fr;
-  gap:60px;
+.card{
+  background:#fffdf5;
+  border-radius:24px;
+  padding:40px;
+  margin-bottom:40px;
 }
 
 .section-label{
   font-family:'League Spartan';
   font-weight:600;
-  font-size:20px;
-  margin-bottom:8px;
+  font-size:22px;
+  margin-bottom:10px;
   color:#4b757d;
-}
-
-.card{
-  background:#fffdf5;
-  border-radius:24px;
-  padding:35px 45px;
-  margin-bottom:40px;
 }
 
 .activity-text{
   font-family:'League Spartan';
   font-weight:700;
-  font-size:34px;
-  margin-top:5px;
+  font-size:38px;
 }
 
-.reminder-card{
+/* PAGE 1 LAYOUT */
+
+.daily-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:40px;
+}
+
+/* PAGE 2 REMINDERS */
+
+.reminder-big{
   background:#fffdf5;
-  border-radius:28px;
-  padding:45px;
-  font-size:22px;
+  border-radius:30px;
+  padding:60px;
+  font-size:34px;
   line-height:1.8;
 }
 
-/* ===== WEEK PAGE ===== */
+/* WEEK VIEW */
 
 .week-grid{
   display:grid;
@@ -153,7 +156,6 @@ body{
   font-family:'League Spartan';
   font-weight:700;
   font-size:22px;
-  margin-bottom:10px;
 }
 
 .week-card{
@@ -170,7 +172,7 @@ body{
   color:#4b757d;
 }
 
-/* ===== URGENT BANNER ===== */
+/* URGENT BANNER */
 
 .banner{
   position:absolute;
@@ -181,7 +183,7 @@ body{
   color:#ffffff;
   font-family:'League Spartan';
   font-weight:800;
-  font-size:42px;
+  font-size:44px;
   display:flex;
   align-items:center;
   overflow:hidden;
@@ -213,51 +215,47 @@ body{
 
 <div class="container">
 
-<!-- ===== DAILY AGENDA PAGE ===== -->
-<div class="page active" id="dailyPage">
+<!-- PAGE 1: DAILY AGENDA -->
+<div class="page active" id="page1">
+  <h1 class="main-title" id="date"></h1>
 
-<h1 class="main-title" id="date"></h1>
+  <div class="daily-layout">
+    <div class="card">
+      <div class="section-label">Morning</div>
+      <div class="activity-text" id="morning"></div>
+    </div>
 
-<div class="daily-layout">
+    <div class="card">
+      <div class="section-label">Afternoon</div>
+      <div class="activity-text" id="afternoon"></div>
+    </div>
 
-<div>
-  <div class="card">
-    <div class="section-label">Morning</div>
-    <div class="activity-text" id="morning"></div>
-  </div>
-
-  <div class="card">
-    <div class="section-label">Afternoon</div>
-    <div class="activity-text" id="afternoon"></div>
-  </div>
-
-  <div class="card">
-    <div class="section-label">Movie</div>
-    <div class="activity-text" id="movie"></div>
+    <div class="card">
+      <div class="section-label">Movie</div>
+      <div class="activity-text" id="movie"></div>
+    </div>
   </div>
 </div>
 
-<div class="reminder-card">
-  <div class="section-label">Reminders</div>
-  <div id="reminder1"></div><br>
-  <div id="reminder2"></div>
+<!-- PAGE 2: REMINDERS -->
+<div class="page" id="page2">
+  <h1 class="main-title">Reminders</h1>
+
+  <div class="reminder-big">
+    <div id="reminder1"></div>
+    <br>
+    <div id="reminder2"></div>
+  </div>
+</div>
+
+<!-- PAGE 3: WEEK VIEW -->
+<div class="page" id="page3">
+  <h1 class="main-title">A Look at the Week</h1>
+  <div class="week-grid" id="weekGrid"></div>
 </div>
 
 </div>
-</div>
 
-<!-- ===== WEEK VIEW PAGE ===== -->
-<div class="page" id="weekPage">
-
-<h1 class="main-title">A Look at the Week</h1>
-
-<div class="week-grid" id="weekGrid"></div>
-
-</div>
-
-</div>
-
-<!-- ===== URGENT BANNER ===== -->
 <div class="banner">
   <span id="urgent"></span>
 </div>
@@ -276,52 +274,42 @@ function clean(v){
 
 const row = data[0];
 
-/* DAILY PAGE */
 document.getElementById("date").innerText = clean(row.Date);
 document.getElementById("morning").innerText = clean(row["Morning Activity"]);
 document.getElementById("afternoon").innerText = clean(row["Afternoon Activity"]);
 document.getElementById("movie").innerText = clean(row.Movie);
+
 document.getElementById("reminder1").innerText = "• " + clean(row["Reminder 1"]);
 document.getElementById("reminder2").innerText = "• " + clean(row["Reminder 2"]);
 
-/* URGENT */
 const urgentText = clean(row["Urgent Banner"]);
 document.getElementById("urgent").innerText = urgentText ? "⚠ " + urgentText : "";
 
 /* WEEK GRID */
 const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const grid = document.getElementById("weekGrid");
-grid.innerHTML = "";
 
 days.forEach(day=>{
   grid.innerHTML += `
     <div class="week-day">
       <div class="week-header">${day}</div>
-
-      <div class="week-card">
-        <div class="week-label">Morning Activity</div>
-        ${clean(row["Morning Activity"])}
-      </div>
-
-      <div class="week-card">
-        <div class="week-label">Afternoon Activity</div>
-        ${clean(row["Afternoon Activity"])}
-      </div>
-
-      <div class="week-card">
-        <div class="week-label">Movie</div>
-        ${clean(row.Movie)}
-      </div>
+      <div class="week-card"><div class="week-label">Morning</div>${clean(row["Morning Activity"])}</div>
+      <div class="week-card"><div class="week-label">Afternoon</div>${clean(row["Afternoon Activity"])}</div>
+      <div class="week-card"><div class="week-label">Movie</div>${clean(row.Movie)}</div>
     </div>
   `;
 });
 
 });
 
-/* PAGE ROTATION */
+/* 3 PAGE ROTATION */
+let pages = ["page1","page2","page3"];
+let current = 0;
+
 setInterval(()=>{
-  document.getElementById("dailyPage").classList.toggle("active");
-  document.getElementById("weekPage").classList.toggle("active");
+  document.getElementById(pages[current]).classList.remove("active");
+  current = (current + 1) % pages.length;
+  document.getElementById(pages[current]).classList.add("active");
 }, 30000);
 
 </script>
