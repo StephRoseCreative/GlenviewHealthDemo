@@ -17,7 +17,7 @@ body{
   color:#2a3a94;
 }
 
-/* ===== BACKGROUND BLOBS ===== */
+/* ===== BACKGROUND ===== */
 
 .bg{
   position:fixed;
@@ -181,14 +181,13 @@ body{
   color:#ffffff;
   font-family:'League Spartan';
   font-weight:800;
-  font-size:40px;
+  font-size:42px;
   display:flex;
   align-items:center;
   overflow:hidden;
 }
 
 .banner span{
-  display:inline-block;
   white-space:nowrap;
   padding-left:100%;
   animation:scroll 18s linear infinite;
@@ -214,7 +213,7 @@ body{
 
 <div class="container">
 
-<!-- DAILY PAGE -->
+<!-- ===== DAILY AGENDA PAGE ===== -->
 <div class="page active" id="dailyPage">
 
 <h1 class="main-title" id="date"></h1>
@@ -247,7 +246,7 @@ body{
 </div>
 </div>
 
-<!-- WEEK PAGE -->
+<!-- ===== WEEK VIEW PAGE ===== -->
 <div class="page" id="weekPage">
 
 <h1 class="main-title">A Look at the Week</h1>
@@ -258,6 +257,7 @@ body{
 
 </div>
 
+<!-- ===== URGENT BANNER ===== -->
 <div class="banner">
   <span id="urgent"></span>
 </div>
@@ -276,6 +276,7 @@ function clean(v){
 
 const row = data[0];
 
+/* DAILY PAGE */
 document.getElementById("date").innerText = clean(row.Date);
 document.getElementById("morning").innerText = clean(row["Morning Activity"]);
 document.getElementById("afternoon").innerText = clean(row["Afternoon Activity"]);
@@ -283,11 +284,11 @@ document.getElementById("movie").innerText = clean(row.Movie);
 document.getElementById("reminder1").innerText = "• " + clean(row["Reminder 1"]);
 document.getElementById("reminder2").innerText = "• " + clean(row["Reminder 2"]);
 
+/* URGENT */
 const urgentText = clean(row["Urgent Banner"]);
 document.getElementById("urgent").innerText = urgentText ? "⚠ " + urgentText : "";
 
 /* WEEK GRID */
-
 const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const grid = document.getElementById("weekGrid");
 grid.innerHTML = "";
@@ -311,7 +312,6 @@ days.forEach(day=>{
         <div class="week-label">Movie</div>
         ${clean(row.Movie)}
       </div>
-
     </div>
   `;
 });
@@ -319,11 +319,7 @@ days.forEach(day=>{
 });
 
 /* PAGE ROTATION */
-
-let showWeek = false;
-
 setInterval(()=>{
-  showWeek = !showWeek;
   document.getElementById("dailyPage").classList.toggle("active");
   document.getElementById("weekPage").classList.toggle("active");
 }, 30000);
